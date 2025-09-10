@@ -936,10 +936,12 @@ function applyNodeRewards(room, node) {
 
 function emitStoryNode(room) {
   const cap = getCap(room.chapterId);
-  const nodeId = room.nodeId || cap?.inicio; // 👈 Solo usa el prólogo si NO hay nodo guardado
+  const nodeId = room.nodeId || cap?.inicio;
   const node = getNode(room.chapterId, nodeId);
 
   if (!node) return;
+
+  room.nodeId = nodeId;
 
   io.to(room.code).emit("story:node", {
     chapterId: room.chapterId,
@@ -948,7 +950,7 @@ function emitStoryNode(room) {
     titulo: cap?.titulo,
     narrativa: cap?.narrativa,
     bossId: node?.boss || null,
-    opciones: node?.opciones || [],
+    opciones: Array.isArray(node?.opciones) ? node.opciones : [], // 👈 ARREGLO AQUÍ
     isBossFinal: !!(
       node?.boss &&
       cap?.bossFinal &&
@@ -1656,10 +1658,34 @@ io.on("connection", (socket) => {
     if (!room) return;
 
     const node = getNode(chapterId, nodeId);
+
+    // Si hay un siguiente nodo, avanzamos
     if (node?.next) {
       room.nodeId = node.next;
       emitStoryNode(room);
+      return;
     }
+
+    // Si el nodo no tiene `next` pero tiene opciones, esperamos votación
+    if (node?.opciones && node.opciones.length > 0) {
+      io.to(room.code).emit("story:waitForVote", {
+        message: "Esperando que los jugadores voten",
+      });
+      return;
+    }
+
+    // Si no hay `next` ni opciones → pasamos automáticamente al boss o al capítulo siguiente
+    const cap = getCap(chapterId);
+    if (cap?.bossFinal && node?.boss !== cap.bossFinal) {
+      room.nodeId = cap.bossFinal;
+      emitStoryNode(room);
+      return;
+    }
+
+    // Si no hay nada más → terminamos capítulo
+    io.to(room.code).emit("story:chapterComplete", {
+      message: "¡Capítulo completado!",
+    });
   });
 
   // Desconexión
