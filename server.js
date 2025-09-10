@@ -1651,6 +1651,17 @@ io.on("connection", (socket) => {
     cb?.({ ok: true });
   });
 
+  socket.on("story:next", ({ chapterId, nodeId }) => {
+    const room = getRoomBySocket(socket);
+    if (!room) return;
+
+    const node = getNode(chapterId, nodeId);
+    if (node?.next) {
+      room.nodeId = node.next;
+      emitStoryNode(room);
+    }
+  });
+
   // Desconexión
   socket.on("disconnect", () => {
     const room = getRoomBySocket(socket);
