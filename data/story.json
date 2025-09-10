@@ -1,0 +1,634 @@
+{
+  "capitulos": [
+    {
+      "id": "prologo",
+      "region": "Prólogo",
+      "titulo": "El Despertar de los Mitos",
+      "inicio": "prologo_intro",
+      "bossFinal": null,
+      "narrativa": "Hace siglos, las criaturas míticas de Colombia sellaron un pacto para coexistir con la humanidad. Hoy, ese pacto se ha roto. Los seis héroes, uno por región, deben elegir por dónde iniciar la defensa del territorio.",
+      "nodos": {
+        "prologo_intro": {
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "El viento sopla distinto. Los espíritus ancestrales despiertan."
+            },
+            {
+              "npc": "Sabia Ancestral",
+              "texto": "Héroes, Colombia les reclama. Donde pisen primero, el destino cambiará."
+            }
+          ],
+          "opciones": [
+            {
+              "id": "caribe",
+              "texto": "Viajar al Caribe",
+              "nextCapitulo": "cap1"
+            },
+            {
+              "id": "andina",
+              "texto": "Viajar a la Región Andina",
+              "nextCapitulo": "cap2"
+            },
+            {
+              "id": "pacifica",
+              "texto": "Viajar a la Región Pacífica",
+              "nextCapitulo": "cap3"
+            }
+          ]
+        }
+      }
+    },
+
+    {
+      "id": "cap1",
+      "region": "Caribe",
+      "titulo": "Las Aguas del Lamento",
+      "inicio": "caribe_intro",
+      "bossFinal": "llorona",
+      "narrativa": "Los lamentos de la Llorona resuenan y criaturas fluviales arrasan los poblados. El mar y los ríos conspiran contra los vivos.",
+      "nodos": {
+        "caribe_intro": {
+          "dialogos": [
+            {
+              "npc": "Shibari",
+              "texto": "El pacto se rompió. Los caimanes atacan los pueblos."
+            },
+            {
+              "npc": "Pescador",
+              "texto": "¡Dicen que la Llorona camina sobre las aguas!"
+            }
+          ],
+          "opciones": [
+            {
+              "id": "pelear",
+              "texto": "Defender la costa",
+              "next": "caribe_pelea"
+            },
+            {
+              "id": "espiar",
+              "texto": "Explorar los manglares",
+              "next": "caribe_espionaje"
+            },
+            {
+              "id": "negociar",
+              "texto": "Buscar al Mohán",
+              "next": "caribe_negociacion"
+            }
+          ]
+        },
+        "caribe_pelea": {
+          "boss": "hombre_caiman",
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "El Hombre Caimán emerge hambriento desde el estuario."
+            }
+          ],
+          "next": "caribe_campamento"
+        },
+        "caribe_espionaje": {
+          "boss": "madremonte",
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "Entre brumas, la Madremonte guarda secretos del bosque costero."
+            }
+          ],
+          "recompensa": { "buff": { "defense": 5, "duration": 2 } },
+          "next": "caribe_campamento_buff"
+        },
+        "caribe_negociacion": {
+          "dialogos": [
+            {
+              "npc": "El Mohán",
+              "texto": "Mi oro por su lealtad... temporal. No esperen piedad del río."
+            }
+          ],
+          "recompensa": { "buff": { "attack": 10, "duration": 2 } },
+          "next": "caribe_campamento_buff"
+        },
+        "caribe_campamento": {
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "El grupo repara redes y armas bajo el rumor del oleaje."
+            }
+          ],
+          "next": "caribe_boss"
+        },
+        "caribe_campamento_buff": {
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "La preparación otorga ventaja para el asalto final."
+            }
+          ],
+          "next": "caribe_boss"
+        },
+        "caribe_boss": {
+          "boss": "llorona",
+          "dialogos": [
+            {
+              "npc": "La Llorona",
+              "texto": "¡Mi lamento ahogará su esperanza!"
+            }
+          ],
+          "nextCapitulo": "cap2"
+        }
+      }
+    },
+
+    {
+      "id": "cap2",
+      "region": "Andina",
+      "titulo": "Sombras del Altiplano",
+      "inicio": "andina_intro",
+      "bossFinal": "mohan",
+      "narrativa": "Los páramos se oscurecen y las lagunas sagradas se agitan. El Mohán manipula corrientes y voluntades.",
+      "nodos": {
+        "andina_intro": {
+          "dialogos": [
+            {
+              "npc": "Simón Rojas",
+              "texto": "Los cultivos se pierden, las nieblas no se levantan."
+            },
+            {
+              "npc": "Campesina",
+              "texto": "Algo guía a las bestias por la noche."
+            }
+          ],
+          "opciones": [
+            {
+              "id": "atacar",
+              "texto": "Atacar de frente",
+              "next": "andina_pelea"
+            },
+            {
+              "id": "espiar",
+              "texto": "Espiar a las tribus",
+              "next": "andina_espionaje"
+            },
+            {
+              "id": "aliarse",
+              "texto": "Aliarse con guardianes",
+              "next": "andina_negociacion"
+            }
+          ]
+        },
+        "andina_pelea": {
+          "boss": "patasola",
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "El monte se parte con el salto de la Patasola."
+            }
+          ],
+          "next": "andina_campamento"
+        },
+        "andina_espionaje": {
+          "boss": "sombreron",
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "Sombras con sombrero vigilan los caminos empedrados."
+            }
+          ],
+          "recompensa": { "buff": { "accuracy": 5, "duration": 2 } },
+          "next": "andina_campamento_buff"
+        },
+        "andina_negociacion": {
+          "dialogos": [
+            {
+              "npc": "Guardián del Páramo",
+              "texto": "Defiende la laguna y te bendeciremos."
+            }
+          ],
+          "recompensa": { "mana": 15 },
+          "next": "andina_campamento_buff"
+        },
+        "andina_campamento": {
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "Las brasas arden; se afilan lanzas para la batalla final."
+            }
+          ],
+          "next": "andina_boss"
+        },
+        "andina_campamento_buff": {
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "Los guardianes refuerzan armas y almas."
+            }
+          ],
+          "recompensa": { "buff": { "attack": 8, "duration": 2 } },
+          "next": "andina_boss"
+        },
+        "andina_boss": {
+          "boss": "mohan",
+          "dialogos": [
+            {
+              "npc": "El Mohán",
+              "texto": "¡Serán arrastrados por mis ríos eternos!"
+            }
+          ],
+          "nextCapitulo": "cap3"
+        }
+      }
+    },
+
+    {
+      "id": "cap3",
+      "region": "Pacífica",
+      "titulo": "El Canto de la Tunda",
+      "inicio": "pacifica_intro",
+      "bossFinal": "tunda",
+      "narrativa": "Tambores en la humedad, voces que engañan. La selva canta y quien escucha, se pierde.",
+      "nodos": {
+        "pacifica_intro": {
+          "dialogos": [
+            {
+              "npc": "Pescador",
+              "texto": "Las mareas traen susurros... y nadie vuelve igual."
+            },
+            {
+              "npc": "Curandera",
+              "texto": "Hay canciones que no deben seguirse."
+            }
+          ],
+          "opciones": [
+            {
+              "id": "atacar",
+              "texto": "Irrumpir en el barrio viejo",
+              "next": "pacifica_buziraco"
+            },
+            {
+              "id": "espiar",
+              "texto": "Seguir ríos y manglares",
+              "next": "pacifica_duende"
+            },
+            {
+              "id": "aliarse",
+              "texto": "Pedir amparo al monte",
+              "next": "pacifica_alianza"
+            }
+          ]
+        },
+        "pacifica_buziraco": {
+          "boss": "buziraco",
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "Buziraco ríe desde los tejados coloniales."
+            }
+          ],
+          "next": "pacifica_campamento"
+        },
+        "pacifica_duende": {
+          "boss": "duende_rio",
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "Un duende guía hacia remolinos imposibles."
+            }
+          ],
+          "recompensa": { "buff": { "speed": 6, "duration": 2 } },
+          "next": "pacifica_campamento_buff"
+        },
+        "pacifica_alianza": {
+          "dialogos": [
+            {
+              "npc": "Sabia de Palenque",
+              "texto": "Bailen a ritmo de tambor y el monte danzará con ustedes."
+            }
+          ],
+          "recompensa": { "heal": 25 },
+          "next": "pacifica_campamento_buff"
+        },
+        "pacifica_campamento": {
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "El sudor se seca con la brisa salina. Se prepara el asalto."
+            }
+          ],
+          "next": "pacifica_boss"
+        },
+        "pacifica_campamento_buff": {
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "La música correcta otorga pasos ligeros y manos firmes."
+            }
+          ],
+          "next": "pacifica_boss"
+        },
+        "pacifica_boss": {
+          "boss": "tunda",
+          "dialogos": [
+            { "npc": "La Tunda", "texto": "Si me siguen, no querrán volver..." }
+          ],
+          "nextCapitulo": "cap4"
+        }
+      }
+    },
+
+    {
+      "id": "cap4",
+      "region": "Amazónica",
+      "titulo": "Juicio de la Selva",
+      "inicio": "amazonica_intro",
+      "bossFinal": "yurupari",
+      "narrativa": "En la espesura, los pasos se vuelven rezos. Todo lo vivo responde a una ley más antigua que el tiempo.",
+      "nodos": {
+        "amazonica_intro": {
+          "dialogos": [
+            {
+              "npc": "Taita",
+              "texto": "La selva escucha. Si mientes, no volverás."
+            },
+            {
+              "npc": "Cazador",
+              "texto": "Huellas enormes cruzan el río al amanecer."
+            }
+          ],
+          "opciones": [
+            {
+              "id": "atacar",
+              "texto": "Rastrear a la bestia gigante",
+              "next": "amazonica_mapinguari"
+            },
+            {
+              "id": "espiar",
+              "texto": "Observar a las tribus del norte",
+              "next": "amazonica_boraro"
+            },
+            {
+              "id": "aliarse",
+              "texto": "Beber yagé con los sabios",
+              "next": "amazonica_alianza"
+            }
+          ]
+        },
+        "amazonica_mapinguari": {
+          "boss": "mapinguari",
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "Un tufo de podredumbre anuncia al Mapinguarí."
+            }
+          ],
+          "next": "amazonica_campamento"
+        },
+        "amazonica_boraro": {
+          "boss": "boraro",
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "Silbidos imitan voces queridas… es una trampa del Boraro."
+            }
+          ],
+          "recompensa": { "buff": { "defense": 7, "duration": 2 } },
+          "next": "amazonica_campamento_buff"
+        },
+        "amazonica_alianza": {
+          "dialogos": [
+            {
+              "npc": "Sabio",
+              "texto": "La selva protege a quien protege. Bebe y ve claro."
+            }
+          ],
+          "recompensa": { "mana": 20 },
+          "next": "amazonica_campamento_buff"
+        },
+        "amazonica_campamento": {
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "Cuerdas y lianas tejen trampas para el espíritu del bosque."
+            }
+          ],
+          "next": "amazonica_boss"
+        },
+        "amazonica_campamento_buff": {
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "Una visión indica el sendero seguro hacia el corazón del mito."
+            }
+          ],
+          "next": "amazonica_boss"
+        },
+        "amazonica_boss": {
+          "boss": "yurupari",
+          "dialogos": [
+            {
+              "npc": "Yuruparí",
+              "texto": "¿Serán juzgados como invasores o guardianes?"
+            }
+          ],
+          "nextCapitulo": "cap5"
+        }
+      }
+    },
+
+    {
+      "id": "cap5",
+      "region": "Orinoquía",
+      "titulo": "Noches del Silbón",
+      "inicio": "orinoquia_intro",
+      "bossFinal": "silbon",
+      "narrativa": "El llano se vuelve un espejo. A lo lejos, un silbido anuncia deuda y castigo.",
+      "nodos": {
+        "orinoquia_intro": {
+          "dialogos": [
+            {
+              "npc": "Vaquero",
+              "texto": "Arden sabanas enteras con fuego que nadie enciende."
+            },
+            {
+              "npc": "Abuela",
+              "texto": "De noche, quien oye el silbido ya está condenado."
+            }
+          ],
+          "opciones": [
+            {
+              "id": "atacar",
+              "texto": "Cortar el paso del incendio",
+              "next": "orinoquia_bola_fuego"
+            },
+            {
+              "id": "espiar",
+              "texto": "Seguir rastros en la noche",
+              "next": "orinoquia_sayona"
+            },
+            {
+              "id": "aliarse",
+              "texto": "Pedir canto al joropo",
+              "next": "orinoquia_alianza"
+            }
+          ]
+        },
+        "orinoquia_bola_fuego": {
+          "boss": "bola_fuego",
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "Una esfera ígnea zigzaguea sobre el pajonal."
+            }
+          ],
+          "next": "orinoquia_campamento"
+        },
+        "orinoquia_sayona": {
+          "boss": "sayona",
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "Un lamento de mujer sin rostro te invita a perderte."
+            }
+          ],
+          "recompensa": { "buff": { "attack": 9, "duration": 2 } },
+          "next": "orinoquia_campamento_buff"
+        },
+        "orinoquia_alianza": {
+          "dialogos": [
+            {
+              "npc": "Chamán Llanero",
+              "texto": "Baila con los muertos y ellos pelearán a tu lado."
+            }
+          ],
+          "recompensa": { "heal": 20 },
+          "next": "orinoquia_campamento_buff"
+        },
+        "orinoquia_campamento": {
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "Se tensan riendas; los caballos huelen la tormenta."
+            }
+          ],
+          "next": "orinoquia_boss"
+        },
+        "orinoquia_campamento_buff": {
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "Un golpe de zapateo marca el ritmo del combate."
+            }
+          ],
+          "next": "orinoquia_boss"
+        },
+        "orinoquia_boss": {
+          "boss": "silbon",
+          "dialogos": [
+            {
+              "npc": "El Silbón",
+              "texto": "Cargarán mis huesos sobre sus conciencias."
+            }
+          ],
+          "nextCapitulo": "cap6"
+        }
+      }
+    },
+
+    {
+      "id": "cap6",
+      "region": "Insular",
+      "titulo": "Abismos del Kraken",
+      "inicio": "insular_intro",
+      "bossFinal": "kraken",
+      "narrativa": "Las islas guardan secretos de corsarios y abismos. Algo antiguo se agita bajo el coral.",
+      "nodos": {
+        "insular_intro": {
+          "dialogos": [
+            {
+              "npc": "Raizal",
+              "texto": "El mar canta bajito… y no es canción de cuna."
+            },
+            {
+              "npc": "Guardacostas",
+              "texto": "Luces de barcos hundidos parpadean en la noche."
+            }
+          ],
+          "opciones": [
+            {
+              "id": "atacar",
+              "texto": "Abordar el galeón fantasma",
+              "next": "insular_pirata"
+            },
+            {
+              "id": "espiar",
+              "texto": "Seguir un canto desde el arrecife",
+              "next": "insular_sirena"
+            },
+            {
+              "id": "aliarse",
+              "texto": "Pedir guía a un monje raizal",
+              "next": "insular_alianza"
+            }
+          ]
+        },
+        "insular_pirata": {
+          "boss": "pirata_fantasma",
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "Cadenas y lamentos arrastran el casco de otro mundo."
+            }
+          ],
+          "next": "insular_campamento"
+        },
+        "insular_sirena": {
+          "boss": "sirena",
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "Un canto perfecto guía hacia el filo de un abismo azul."
+            }
+          ],
+          "recompensa": { "buff": { "speed": 7, "duration": 2 } },
+          "next": "insular_campamento_buff"
+        },
+        "insular_alianza": {
+          "dialogos": [
+            {
+              "npc": "Monje Raizal",
+              "texto": "La oración calma la marea. Tomen aire, tomen fuerza."
+            }
+          ],
+          "recompensa": { "mana": 20, "heal": 15 },
+          "next": "insular_campamento_buff"
+        },
+        "insular_campamento": {
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "Velas arden en botellas; el océano escucha."
+            }
+          ],
+          "next": "insular_boss"
+        },
+        "insular_campamento_buff": {
+          "dialogos": [
+            {
+              "npc": "Narrador",
+              "texto": "Bendecido el jarabe de coco que devuelve el aliento."
+            }
+          ],
+          "next": "insular_boss"
+        },
+        "insular_boss": {
+          "boss": "kraken",
+          "dialogos": [
+            {
+              "npc": "El Kraken",
+              "texto": "Desde el fondo del mundo, arranco islas y voluntades."
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
