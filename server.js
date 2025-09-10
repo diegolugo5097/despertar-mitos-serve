@@ -936,18 +936,26 @@ function applyNodeRewards(room, node) {
 
 function emitStoryNode(room) {
   const cap = getCap(room.chapterId);
-  const node = getNode(room.chapterId, room.nodeId);
-  if (node) applyNodeRewards(room, node);
+  const nodeId = room.nodeId || cap?.inicio; // 👈 Solo usa el prólogo si NO hay nodo guardado
+  const node = getNode(room.chapterId, nodeId);
+
+  if (!node) return;
 
   io.to(room.code).emit("story:node", {
     chapterId: room.chapterId,
-    nodeId: room.nodeId,
+    nodeId,
+    region: cap?.region || "",
     titulo: cap?.titulo,
     narrativa: cap?.narrativa,
     bossId: node?.boss || null,
-    npcDialogue: getNpcDialogue(room.chapterId, room.nodeId),
+    opciones: node?.opciones || [],
+    isBossFinal: !!(
+      node?.boss &&
+      cap?.bossFinal &&
+      node.boss === cap.bossFinal
+    ),
+    npcDialogue: getNpcDialogue(room.chapterId, nodeId),
   });
-  io.to(room.code).emit("room:update", room);
 }
 
 function nextFromOption(room, chosenId) {
