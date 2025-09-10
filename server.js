@@ -946,17 +946,16 @@ function emitStoryNode(room) {
   io.to(room.code).emit("story:node", {
     chapterId: room.chapterId,
     nodeId,
-    region: cap?.region || "",
     titulo: cap?.titulo,
     narrativa: cap?.narrativa,
     bossId: node?.boss || null,
-    opciones: node?.opciones?.length > 0 ? node.opciones : undefined, // 👈 Solo mandamos opciones si existen
+    opciones: node?.opciones?.length > 0 ? node.opciones : undefined,
     isBossFinal: !!(
       node?.boss &&
       cap?.bossFinal &&
       node.boss === cap.bossFinal
     ),
-    npcDialogue: getNpcDialogue(room.chapterId, nodeId),
+    npcDialogue: node?.dialogos || [],
   });
 }
 
@@ -1271,18 +1270,32 @@ io.on("connection", (socket) => {
   // Votación: votar
   socket.on("vote:cast", ({ optionId }) => {
     const room = getRoomBySocket(socket);
-    if (!room || !room.activeVote) return;
-    if (!room.players[socket.id]) return;
-    if (!room.activeVote.options.find((o) => o.id === optionId)) return;
+    if (!room) return;
 
-    room.activeVote.votes[socket.id] = optionId;
-    io.to(room.code).emit("vote:update", { votes: room.activeVote.votes });
+    const cap = getCap(room.chapterId);
+    const node = getNode(room.chapterId, room.nodeId);
 
-    const players = Object.keys(room.players).length;
-    const { winner, tally } = majorityOption(room.activeVote.votes);
-    if (winner && tally[winner] > Math.floor(players / 2)) {
-      clearTimeout(room.activeVote.timeoutHandle);
-      finalizeVote(room.code);
+    if (!node?.opciones) return;
+
+    const option = node.opciones.find((opt) => opt.id === optionId);
+    if (!option) return;
+
+    // Si la opción lleva a un capítulo nuevo
+    if (option.nextCapitulo) {
+      room.chapterId = option.nextCapitulo;
+      const nextCap = getCap(option.nextCapitulo);
+      room.nodeId = nextCap.inicio;
+
+      // Enviamos a todos el nuevo capítulo
+      emitStoryNode(room);
+      return;
+    }
+
+    // Si es un nodo dentro del mismo capítulo
+    if (option.next) {
+      room.nodeId = option.next;
+      emitStoryNode(room);
+      return;
     }
   });
 
