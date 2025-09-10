@@ -950,7 +950,7 @@ function emitStoryNode(room) {
     titulo: cap?.titulo,
     narrativa: cap?.narrativa,
     bossId: node?.boss || null,
-    opciones: Array.isArray(node?.opciones) ? node.opciones : [], // 👈 ARREGLO AQUÍ
+    opciones: node?.opciones?.length > 0 ? node.opciones : undefined, // 👈 Solo mandamos opciones si existen
     isBossFinal: !!(
       node?.boss &&
       cap?.bossFinal &&
